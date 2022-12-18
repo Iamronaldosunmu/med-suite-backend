@@ -10,7 +10,9 @@ export const validateApplicantId = async (req, res, next) => {
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "This applicant ID is not valid" });
 
-  let applicant = await Applicant.findOne({ _id: applicantId });
+  let applicant = await Applicant.findOne({ _id: applicantId }).populate(
+    "user"
+  );
   if (!applicant)
     return res
       .status(StatusCodes.NOT_FOUND)
