@@ -20,9 +20,10 @@ imageRouter.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-imageRouter.delete("/", async (req, res) => {
+imageRouter.delete("/:public_id", async (req, res) => {
+  const { public_id } = req.params;
   try {
-    const result = await cloudinary.uploader.destroy(req.body.public_id);
+    const result = await cloudinary.uploader.destroy(public_id);
     return res.status(StatusCodes.OK).send(result);
   } catch (err) {
     res.status(err.http_code).send(err);
