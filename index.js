@@ -14,6 +14,6 @@ middleware(app);
 useRoutesFor(app);
 
 app.listen(process.env.PORT || 4000, () =>
-  console.log(`Console is now running on port ${process.env.PORT}`)
+  console.log(`Console is now running on port ${process.env.PORT || 4000}`)
 );
 connectToDB();
