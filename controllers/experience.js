@@ -57,6 +57,7 @@ export const saveExperience = async (req, res) => {
     return res.status(400).json({ message: documentError.details[0].message });
 
   applicant = await Applicant.findById(applicantId);
+  applicant.currentPage = "application_fee";
   applicant.experience = req.body;
   await applicant.save();
 

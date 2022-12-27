@@ -16,7 +16,7 @@ export const registerContactDetails = async (req, res) => {
 
   applicant = await Applicant.findOneAndUpdate(
     { _id: applicantId },
-    { contactDetails: req.body },
+    { contactDetails: req.body, currentPage: "documents" },
     { new: true }
   );
 

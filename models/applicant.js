@@ -52,6 +52,7 @@ const applicantSchema = mongoose.Schema({
       resume: Document,
       referenceLetter: Document,
       birthCertificate: Document,
+      profilePicture: Document,
     },
     default: {
       nursingDegree: DocumentDefault,
@@ -61,6 +62,7 @@ const applicantSchema = mongoose.Schema({
       resume: DocumentDefault,
       referenceLetter: DocumentDefault,
       birthCertificate: DocumentDefault,
+      profilePicture: DocumentDefault,
     },
   },
   experience: {
@@ -71,6 +73,11 @@ const applicantSchema = mongoose.Schema({
   paymentCompleted: {
     type: Boolean,
     default: false,
+  },
+  currentPage: {
+    type: String,
+    enum: ["contact_details", "documents", "experience"],
+    default: "contact_details",
   },
 });
 

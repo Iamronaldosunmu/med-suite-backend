@@ -68,11 +68,13 @@ export const checkIfAllDocumentsHaveBeenUploaded = async (req, res) => {
     fileHasBeenUploaded(applicant.documents._doc[field])
   );
 
-  if (allFilesHaveBeenUploaded)
+  if (allFilesHaveBeenUploaded) {
+    applicant.currentPage = "experience";
+    await applicant.save();
     return res
       .status(StatusCodes.OK)
       .json({ message: "All Documents have been uploaded successfully" });
-  else
+  } else
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Not all files have been uploaded yet!" });
