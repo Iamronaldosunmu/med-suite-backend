@@ -7,79 +7,122 @@ const Document = {
   fileName: String,
 };
 
+const DocumentReviewStatus = {
+  type: String,
+  enum: ["Being Reviewed", "Accepted", "Rejected"],
+};
+
 const DocumentDefault = {
   secure_url: "",
   public_id: "",
   fileName: "",
 };
 
-const applicantSchema = mongoose.Schema({
-  // Relationship between User and Applicant
-  user: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-  },
-  contactDetails: {
-    type: {
-      firstName: String,
-      middleName: String,
-      lastName: String,
-      phoneNumber: String,
-      stateOfOrigin: String,
-      countryOfOrigin: String,
-      street: String,
-      city: String,
-      state: String,
+const applicantSchema = mongoose.Schema(
+  {
+    // Relationship between User and Applicant
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
-    default: {
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      phoneNumber: "",
-      stateOfOrigin: "",
-      countryOfOrigin: "",
-      street: "",
-      city: "",
-      state: "",
+    contactDetails: {
+      type: {
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        phoneNumber: String,
+        stateOfOrigin: String,
+        countryOfOrigin: String,
+        street: String,
+        city: String,
+        state: String,
+      },
+      default: {
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        phoneNumber: "",
+        stateOfOrigin: "",
+        countryOfOrigin: "",
+        street: "",
+        city: "",
+        state: "",
+      },
+    },
+    documents: {
+      type: {
+        nursingDegree: Document,
+        practicingLicense: Document,
+        photoIdentification: Document,
+        evidenceOfRegistration: Document,
+        resume: Document,
+        referenceLetter: Document,
+        birthCertificate: Document,
+        profilePicture: Document,
+      },
+      default: {
+        nursingDegree: DocumentDefault,
+        practicingLicense: DocumentDefault,
+        photoIdentification: DocumentDefault,
+        evidenceOfRegistration: DocumentDefault,
+        resume: DocumentDefault,
+        referenceLetter: DocumentDefault,
+        birthCertificate: DocumentDefault,
+        profilePicture: DocumentDefault,
+      },
+    },
+    experience: {
+      nursingExperience: { type: String, default: "" },
+      postGraduateExperience: { type: String, default: "" },
+      proofOfWork: { type: Document, default: DocumentDefault },
+    },
+    doumentReviewStatuses: {
+      type: {
+        nursingDegree: DocumentReviewStatus,
+        practicingLicense: DocumentReviewStatus,
+        photoIdentification: DocumentReviewStatus,
+        evidenceOfRegistration: DocumentReviewStatus,
+        resume: DocumentReviewStatus,
+        referenceLetter: DocumentReviewStatus,
+        birthCertificate: DocumentReviewStatus,
+        profilePicture: DocumentReviewStatus,
+        proofOfWork: DocumentReviewStatus,
+      },
+      default: {
+        nursingDegree: "Being Reviewed",
+        practicingLicense: "Being Reviewed",
+        photoIdentification: "Being Reviewed",
+        evidenceOfRegistration: "Being Reviewed",
+        resume: "Being Reviewed",
+        referenceLetter: "Being Reviewed",
+        birthCertificate: "Being Reviewed",
+        profilePicture: "Being Reviewed",
+        proofOfWork: "Being Reviewed",
+      },
+    },
+    paymentCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: String,
+      enum: [
+        "In Progress",
+        "Being Reviewed",
+        "Approved",
+        "Invited For Meeting",
+        "Submitted",
+      ],
+      default: "In Progress",
+    },
+    currentPage: {
+      type: String,
+      enum: ["contact_details", "documents", "experience"],
+      default: "contact_details",
     },
   },
-  documents: {
-    type: {
-      nursingDegree: Document,
-      practicingLicense: Document,
-      photoIdentification: Document,
-      evidenceOfRegistration: Document,
-      resume: Document,
-      referenceLetter: Document,
-      birthCertificate: Document,
-      profilePicture: Document,
-    },
-    default: {
-      nursingDegree: DocumentDefault,
-      practicingLicense: DocumentDefault,
-      photoIdentification: DocumentDefault,
-      evidenceOfRegistration: DocumentDefault,
-      resume: DocumentDefault,
-      referenceLetter: DocumentDefault,
-      birthCertificate: DocumentDefault,
-      profilePicture: DocumentDefault,
-    },
-  },
-  experience: {
-    nursingExperience: { type: String, default: "" },
-    postGraduateExperience: { type: String, default: "" },
-    proofOfWork: { type: Document, default: DocumentDefault },
-  },
-  paymentCompleted: {
-    type: Boolean,
-    default: false,
-  },
-  currentPage: {
-    type: String,
-    enum: ["contact_details", "documents", "experience"],
-    default: "contact_details",
-  },
-});
+  { timestamps: true }
+);
 
 export const validateContactDetails = (payload) => {
   const schema = Joi.object({
