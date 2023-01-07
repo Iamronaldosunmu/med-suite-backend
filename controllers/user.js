@@ -4,6 +4,7 @@ import passportLocal from "passport-local";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Applicant from "../models/applicant.js";
+import Chat from "../models/chat.js";
 
 const localStrategy = passportLocal.Strategy;
 // const JWTstrategy = passportJwt.Strategy;
@@ -44,8 +45,9 @@ passport.use(
           email,
           password: hashed_password,
         });
-        
+
         const applicant = await Applicant.create({ user: user._id });
+        const chat = await Chat.create({ applicant: applicant._id });
         return done(null, { ...user, applicantId: applicant._id });
       } catch (error) {
         done(error);
