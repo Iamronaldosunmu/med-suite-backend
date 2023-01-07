@@ -1,6 +1,7 @@
 import error from "../middleware/Error.js";
 import applicantRouter from "../routes/applicant.js";
 import contactDetailsRouter from "../routes/contactDetails.js";
+import documentReviewRouter from "../routes/documentReview.js";
 import documentsRouter from "../routes/documents.js";
 import experienceRouter from "../routes/experience.js";
 import imageRouter from "../routes/image.js";
@@ -15,6 +16,7 @@ export default (app) => {
   app.use("/api/applicant/documents", documentsRouter);
   app.use("/api/applicant/experience", experienceRouter);
   app.use("/api/applicant/payment", paymentsRouter);
+  app.use("/api/review_documents", documentReviewRouter);
   app.get("*", (req, res) => {
     res.sendStatus(404);
   });
