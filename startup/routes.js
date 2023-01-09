@@ -5,6 +5,7 @@ import documentReviewRouter from "../routes/documentReview.js";
 import documentsRouter from "../routes/documents.js";
 import experienceRouter from "../routes/experience.js";
 import imageRouter from "../routes/image.js";
+import messageRouter from "../routes/message.js";
 import paymentsRouter from "../routes/payment.js";
 import userRouter from "../routes/user.js";
 
@@ -17,6 +18,7 @@ export default (app) => {
   app.use("/api/applicant/experience", experienceRouter);
   app.use("/api/applicant/payment", paymentsRouter);
   app.use("/api/review_documents", documentReviewRouter);
+  app.use("/api/messages", messageRouter);
   app.get("*", (req, res) => {
     res.sendStatus(404);
   });
