@@ -117,7 +117,7 @@ const applicantSchema = mongoose.Schema(
     },
     currentPage: {
       type: String,
-      enum: ["contact_details", "documents", "experience"],
+      enum: ["contact_details", "documents", "experience", "application_fee"],
       default: "contact_details",
     },
   },
