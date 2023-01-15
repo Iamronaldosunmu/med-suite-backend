@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer"
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -8,17 +8,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendMail = (email, subject, message, cb = () => {}) => {
+export const sendMail = (email, subject, message, cb = () => {}) => {
   const mailOptions = {
     from: "ECC",
     to: email,
     subject,
-    text: message,
+    html: message,
   };
   let result;
   transporter.sendMail(mailOptions, cb);
 };
 
-module.exports = {
-  sendMail,
-};
