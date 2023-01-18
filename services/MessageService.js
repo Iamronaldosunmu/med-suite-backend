@@ -12,6 +12,7 @@ class MessageService {
       throw new Error("Not Found: No Chat with this applicant ID exists");
     chat.messages.push(message);
     await chat.save();
+    return message;
   }
 
   static async markAllMessagesAsRead(applicantId) {

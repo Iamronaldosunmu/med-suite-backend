@@ -26,8 +26,12 @@ export const sendMessage = async (req, res) => {
     return res.status(400).json({ message: "Message content is required!!" });
 
   try {
-    await MessageService.sendMessage(applicantId, from, content);
-    return res.status(200).json({ message: "Message sent Successfully!" });
+    const message = await MessageService.sendMessage(
+      applicantId,
+      from,
+      content
+    );
+    return res.status(200).json({ message });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -37,7 +41,6 @@ export const getMessagesFromOneChatbox = async (req, res) => {
   const { applicant, applicantId } = req;
 
   const chat = await Chat.findOne({ applicant: applicantId });
-  console.log(chat.mes);
   return res.status(200).json({
     messages: chat.messages,
   });
