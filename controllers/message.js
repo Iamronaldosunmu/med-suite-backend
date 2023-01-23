@@ -15,7 +15,7 @@ export const markAllAsRead = async (req, res) => {
 };
 
 export const getAllChatboxes = async (req, res) => {
-  const chats = await Chat.find({});
+  const chats = await Chat.find({}).populate("applicant");
   return res.status(200).json({ chats });
 };
 
