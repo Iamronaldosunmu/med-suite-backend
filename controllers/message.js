@@ -3,9 +3,21 @@ import MessageService from "../services/MessageService.js";
 
 export const markAllAsRead = async (req, res) => {
   const { applicant, applicantId } = req;
+  const { userType } = req.query;
+
+  if (!userType)
+    return res.status(400).json({ message: "The user type is required!" });
+
+  if (userType !== "applicant" && userType !== "admin")
+    return res.status(400).json({ message: "The user type is invalid!" });
 
   try {
-    await MessageService.markAllMessagesAsRead(applicantId);
+    console.log(userType);
+    if (userType == "applicant")
+      await MessageService.markAllMessagesAsRead(applicantId, "applicant");
+    else if (userType == "admin") {
+      await MessageService.markAllMessagesAsRead(applicantId, "applicant");
+    }
     return res
       .status(200)
       .json({ message: "All Messages Successfully marked as read!" });
@@ -15,7 +27,8 @@ export const markAllAsRead = async (req, res) => {
 };
 
 export const getAllChatboxes = async (req, res) => {
-  const chats = await Chat.find({}).populate("applicant");
+  let chats = await Chat.find({}).populate("applicant");
+  chats = chats.filter(chat => chat.applicant.status !== "In Progress");
   return res.status(200).json({ chats });
 };
 
