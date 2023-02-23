@@ -1,4 +1,5 @@
 import error from "../middleware/Error.js";
+import adminRouter from "../routes/admin.js";
 import applicantRouter from "../routes/applicant.js";
 import contactDetailsRouter from "../routes/contactDetails.js";
 import documentReviewRouter from "../routes/documentReview.js";
@@ -12,6 +13,7 @@ import userRouter from "../routes/user.js";
 export default (app) => {
   app.use("/api/applicant", applicantRouter);
   app.use("/api/users", userRouter);
+  app.use("/api/admin", adminRouter);
   app.use("/api/applicant/contact_details", contactDetailsRouter);
   app.use("/api/image", imageRouter);
   app.use("/api/applicant/documents", documentsRouter);
