@@ -11,9 +11,14 @@ const messageSchema = mongoose.Schema(
       type: String,
     },
     status: {
-      type: String,
-      enum: ["read", "unread"],
-      default: "unread",
+      type: {
+        applicant: String,
+        admin: String,
+      },
+      default: {
+        applicant: "unread",
+        admin: "unread",
+      },
     },
   },
   { timestamps: true }
